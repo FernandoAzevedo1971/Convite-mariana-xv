@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Visualizador PDF (PDF.js)</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    main { display: flex; align-items: center; justify-content: center; height: 100%; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .box { max-width: 720px; padding: 24px; }
+    code { background: #f5f5f7; padding: 2px 6px; border-radius: 4px; }
+    a.button { display: inline-block; padding: 12px 16px; border: 1px solid #ccc; border-radius: 8px; text-decoration: none; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="box">
+    <h1>Redirecionando para o visualizador PDF</h1>
+    <p>Se nada acontecer em 2 segundos, clique no botão abaixo.</p>
+    <p>
+      Arquivo configurado: <code id="fileName">Sugestoes_de_Presentes_Mari_XV_com_WhatsApp.pdf</code>
+    </p>
+    <p><a id="goBtn" class="button" href="#">Abrir no PDF.js</a></p>
+  </div>
+</main>
+<script>
+  // Altere o nome do arquivo abaixo para o seu PDF, se necessário.
+  const FILE_PATH = "Sugestoes_de_Presentes_Mari_XV_com_WhatsApp.pdf"; // relativo ao repositório
+
+  function buildViewerURL(filePath) {
+    const base = "https://mozilla.github.io/pdf.js/web/viewer.html";
+    const url = new URL(base);
+    // Use o caminho absoluto do GitHub Pages atual
+    const currentBase = window.location.origin + window.location.pathname.replace(/[^\\/]*$/, "");
+    const absoluteFileURL = new URL(filePath, currentBase).toString();
+    url.searchParams.set("file", absoluteFileURL);
+    return url.toString();
+  }
+
+  const target = buildViewerURL(FILE_PATH);
+  document.getElementById("fileName").textContent = FILE_PATH;
+  const btn = document.getElementById("goBtn");
+  btn.href = target;
+
+  // Redireciona automaticamente
+  setTimeout(() => { window.location.href = target; }, 800);
+</script>
+</body>
+</html>
